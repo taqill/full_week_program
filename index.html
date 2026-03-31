@@ -1,0 +1,286 @@
+
+<style>
+  * { box-sizing: border-box; }
+  .prog { padding: 1rem 0 1.5rem; }
+  .tabs { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 16px; }
+  .tab { padding: 8px 4px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); font-size: 11px; font-weight: 500; color: var(--color-text-secondary); cursor: pointer; text-align: center; transition: all .15s; }
+  .tab-sub { font-size: 9px; font-weight: 400; opacity: .7; display: block; margin-top: 1px; }
+  .act-purple { background:#EEEDFE; color:#3C3489; border-color:#AFA9EC; }
+  .act-pink   { background:#FBEAF0; color:#72243E; border-color:#F4C0D1; }
+  .act-teal   { background:#E1F5EE; color:#085041; border-color:#5DCAA5; }
+  .act-gray   { background:#F1EFE8; color:#444441; border-color:#D3D1C7; }
+  .act-red    { background:#FCEBEB; color:#A32D2D; border-color:#F7C1C1; }
+  .act-amber  { background:#FAEEDA; color:#633806; border-color:#FAC775; }
+  .act-rest   { background:#F1EFE8; color:#444441; border-color:#D3D1C7; }
+  .panel { display: none; }
+  .panel.show { display: block; }
+  .focus-bar { border-radius: var(--border-radius-md); padding: 10px 14px; margin-bottom: 14px; font-size: 12px; display: flex; gap: 10px; align-items: center; border: 0.5px solid; }
+  .fb-purple { background:#EEEDFE; color:#3C3489; border-color:#AFA9EC; }
+  .fb-pink   { background:#FBEAF0; color:#72243E; border-color:#F4C0D1; }
+  .fb-teal   { background:#E1F5EE; color:#085041; border-color:#5DCAA5; }
+  .fb-gray   { background:#F1EFE8; color:#5F5E5A; border-color:#D3D1C7; }
+  .fb-red    { background:#FCEBEB; color:#A32D2D; border-color:#F7C1C1; }
+  .fb-amber  { background:#FAEEDA; color:#633806; border-color:#FAC775; }
+  .focus-icon { font-size: 18px; flex-shrink: 0; }
+  .section-head { font-size: 11px; font-weight: 500; color: var(--color-text-tertiary); letter-spacing:.06em; text-transform:uppercase; margin: 14px 0 4px; }
+  .ex-row { display: grid; grid-template-columns: 28px 1fr auto; align-items: start; gap: 10px; padding: 11px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .ex-row:last-child { border-bottom: none; }
+  .ex-num { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:500; flex-shrink:0; margin-top:1px; }
+  .n-purple { background:#EEEDFE; color:#3C3489; }
+  .n-pink   { background:#FBEAF0; color:#72243E; }
+  .n-teal   { background:#E1F5EE; color:#085041; }
+  .n-gray   { background:#F1EFE8; color:#444441; }
+  .n-amber  { background:#FAEEDA; color:#633806; }
+  .ex-name { font-size:14px; font-weight:500; color:var(--color-text-primary); margin-bottom:3px; }
+  .ex-alt  { font-size:11px; color:var(--color-text-tertiary); margin-bottom:4px; }
+  .ex-tags { display:flex; gap:4px; flex-wrap:wrap; }
+  .tag { font-size:10px; padding:2px 7px; border-radius:20px; }
+  .tag-m { background:var(--color-background-secondary); color:var(--color-text-secondary); border:0.5px solid var(--color-border-tertiary); }
+  .tag-t { background:#FCEBEB; color:#A32D2D; border:0.5px solid #F09595; }
+  .ex-sets { text-align:right; font-size:13px; font-weight:500; color:var(--color-text-primary); white-space:nowrap; flex-shrink:0; }
+  .ex-reps { font-size:11px; color:var(--color-text-secondary); text-align:right; }
+  .rest-note { background:var(--color-background-secondary); border-radius:var(--border-radius-md); padding:10px 14px; margin-top:14px; font-size:12px; color:var(--color-text-secondary); border:0.5px solid var(--color-border-tertiary); }
+  .rest-big { text-align:center; padding: 32px 16px; color:var(--color-text-secondary); font-size:14px; line-height:1.8; }
+  .rest-emoji { font-size:40px; display:block; margin-bottom:10px; }
+
+  @media (prefers-color-scheme: dark) {
+    .act-purple { background:#26215C; color:#AFA9EC; border-color:#534AB7; }
+    .act-pink   { background:#4B1528; color:#ED93B1; border-color:#993556; }
+    .act-teal   { background:#04342C; color:#5DCAA5; border-color:#0F6E56; }
+    .act-gray   { background:#2C2C2A; color:#B4B2A9; border-color:#5F5E5A; }
+    .act-red    { background:#501313; color:#F09595; border-color:#A32D2D; }
+    .act-amber  { background:#412402; color:#EF9F27; border-color:#854F0B; }
+    .fb-purple { background:#26215C; color:#AFA9EC; border-color:#534AB7; }
+    .fb-pink   { background:#4B1528; color:#ED93B1; border-color:#993556; }
+    .fb-teal   { background:#04342C; color:#5DCAA5; border-color:#0F6E56; }
+    .fb-gray   { background:#2C2C2A; color:#B4B2A9; border-color:#5F5E5A; }
+    .fb-red    { background:#501313; color:#F09595; border-color:#A32D2D; }
+    .fb-amber  { background:#412402; color:#EF9F27; border-color:#854F0B; }
+    .n-purple { background:#26215C; color:#AFA9EC; }
+    .n-pink   { background:#4B1528; color:#ED93B1; }
+    .n-teal   { background:#04342C; color:#5DCAA5; }
+    .n-gray   { background:#2C2C2A; color:#B4B2A9; }
+    .n-amber  { background:#412402; color:#EF9F27; }
+  }
+</style>
+
+<div class="prog">
+  <div class="tabs">
+    <div class="tab act-purple" id="tab-0" onclick="show(0)">จันทร์<span class="tab-sub">Full A</span></div>
+    <div class="tab" id="tab-1" onclick="show(1)">อังคาร<span class="tab-sub">คาร์ดิโอ</span></div>
+    <div class="tab" id="tab-2" onclick="show(2)">พุธ<span class="tab-sub">Full B</span></div>
+    <div class="tab" id="tab-3" onclick="show(3)">พฤหัส<span class="tab-sub">ยืดเหยียด</span></div>
+    <div class="tab" id="tab-4" onclick="show(4)">ศุกร์<span class="tab-sub">ปาร์ตี้</span></div>
+    <div class="tab" id="tab-5" onclick="show(5)">เสาร์<span class="tab-sub">Full C</span></div>
+    <div class="tab" id="tab-6" onclick="show(6)">อาทิตย์<span class="tab-sub">พัก</span></div>
+  </div>
+
+  <!-- MON: Full Body A -->
+  <div class="panel show" id="panel-0">
+    <div class="focus-bar fb-purple"><span class="focus-icon">🦵</span><span><strong>Full Body A — Squat focus</strong> · เน้นขาหน้า + สร้างฐาน</span></div>
+    <div class="section-head">Compound</div>
+    <div class="ex-row">
+      <div class="ex-num n-purple">1</div>
+      <div><div class="ex-name">Goblet Squat</div><div class="ex-alt">อัปเกรด → Back Squat เมื่อฟอร์มดีแล้ว</div><div class="ex-tags"><span class="tag tag-m">Quad</span><span class="tag tag-m">Glute</span><span class="tag tag-t">เข่าตามนิ้วเท้า</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">10–12 ครั้ง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-purple">2</div>
+      <div><div class="ex-name">DB Bench Press</div><div class="ex-alt">ทางเลือก → Push-up ยกเท้า</div><div class="ex-tags"><span class="tag tag-m">อก</span><span class="tag tag-m">ไหล่หน้า</span><span class="tag tag-m">หลังแขน</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">10–12 ครั้ง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-purple">3</div>
+      <div><div class="ex-name">Single Arm DB Row</div><div class="ex-alt">ทางเลือก → Seated Cable Row</div><div class="ex-tags"><span class="tag tag-m">หลังกลาง</span><span class="tag tag-m">หน้าแขน</span><span class="tag tag-t">ข้อศอกชิดลำตัว</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">10–12 ครั้ง</div></div>
+    </div>
+    <div class="section-head">Accessory</div>
+    <div class="ex-row">
+      <div class="ex-num n-purple">4</div>
+      <div><div class="ex-name">Romanian Deadlift</div><div class="ex-tags"><span class="tag tag-m">Hamstring</span><span class="tag tag-m">Glute</span><span class="tag tag-t">หลังตรงตลอด</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">12 ครั้ง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-purple">5</div>
+      <div><div class="ex-name">Lateral Raise</div><div class="ex-tags"><span class="tag tag-m">ไหล่ข้าง</span><span class="tag tag-t">น้ำหนักเบา</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+    </div>
+    <div class="section-head">Core</div>
+    <div class="ex-row">
+      <div class="ex-num n-purple">6</div>
+      <div><div class="ex-name">Plank</div><div class="ex-tags"><span class="tag tag-m">Core</span><span class="tag tag-t">สะโพกไม่ยกสูง</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">30–45 วิ</div></div>
+    </div>
+    <div class="rest-note">⏱ พัก Compound 90–120 วิ · Accessory 60 วิ · รวม ~55 นาที</div>
+  </div>
+
+  <!-- TUE: Cardio -->
+  <div class="panel" id="panel-1">
+    <div class="focus-bar fb-pink"><span class="focus-icon">🚴</span><span><strong>คาร์ดิโอเบา — Active Recovery</strong> · ช่วยฟื้นฟูกล้ามเนื้อจากวันจันทร์</span></div>
+    <div class="section-head">เลือกอย่างใดอย่างหนึ่ง</div>
+    <div class="ex-row">
+      <div class="ex-num n-pink">1</div>
+      <div><div class="ex-name">ปั่นจักรยาน (แนะนำที่สุด)</div><div class="ex-alt">Stationary bike หรือปั่นกลางแจ้ง</div><div class="ex-tags"><span class="tag tag-m">Zone 2</span><span class="tag tag-t">พูดคุยได้สบาย</span></div></div>
+      <div><div class="ex-sets">1 เซต</div><div class="ex-reps">30 นาที</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-pink">2</div>
+      <div><div class="ex-name">เดินเร็ว</div><div class="ex-alt">เดินบนลู่วิ่ง incline 5–8% หรือกลางแจ้ง</div><div class="ex-tags"><span class="tag tag-m">Low Impact</span><span class="tag tag-m">ขาน้อย</span></div></div>
+      <div><div class="ex-sets">1 เซต</div><div class="ex-reps">30–40 นาที</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-pink">3</div>
+      <div><div class="ex-name">ว่ายน้ำ</div><div class="ex-alt">ดีมากถ้ามีสระ แรงกระแทกต่ำ</div><div class="ex-tags"><span class="tag tag-m">Full Body</span><span class="tag tag-m">Low Impact</span></div></div>
+      <div><div class="ex-sets">1 เซต</div><div class="ex-reps">30 นาที</div></div>
+    </div>
+    <div class="rest-note">⏱ รวม 30–40 นาที · หลีกเลี่ยงวิ่งในวันนี้ ขายังล้าจากวันจันทร์</div>
+  </div>
+
+  <!-- WED: Full Body B -->
+  <div class="panel" id="panel-2">
+    <div class="focus-bar fb-teal"><span class="focus-icon">🏗️</span><span><strong>Full Body B — Hinge focus</strong> · เน้น Posterior chain: หลังขา + ก้น + หลัง</span></div>
+    <div class="section-head">Compound</div>
+    <div class="ex-row">
+      <div class="ex-num n-teal">1</div>
+      <div><div class="ex-name">Conventional Deadlift</div><div class="ex-alt">เริ่มเบา เน้นฟอร์มก่อน — สำคัญมาก</div><div class="ex-tags"><span class="tag tag-m">หลังทั้งหมด</span><span class="tag tag-m">Glute</span><span class="tag tag-m">Hamstring</span><span class="tag tag-t">หลังตรง</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">6–8 ครั้ง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-teal">2</div>
+      <div><div class="ex-name">Lat Pulldown</div><div class="ex-alt">อัปเกรด → Pull-up เมื่อทำได้</div><div class="ex-tags"><span class="tag tag-m">หลังกว้าง</span><span class="tag tag-m">หน้าแขน</span><span class="tag tag-t">ดึงลงที่อก</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">10–12 ครั้ง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-teal">3</div>
+      <div><div class="ex-name">DB Shoulder Press</div><div class="ex-alt">ทำนั่งหรือยืนก็ได้</div><div class="ex-tags"><span class="tag tag-m">ไหล่หน้า</span><span class="tag tag-m">ไหล่ข้าง</span><span class="tag tag-m">หลังแขน</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">10–12 ครั้ง</div></div>
+    </div>
+    <div class="section-head">Accessory</div>
+    <div class="ex-row">
+      <div class="ex-num n-teal">4</div>
+      <div><div class="ex-name">Goblet Squat (เบา)</div><div class="ex-alt">น้ำหนักเบากว่าวัน A ~20%</div><div class="ex-tags"><span class="tag tag-m">Quad</span><span class="tag tag-m">Glute</span></div></div>
+      <div><div class="ex-sets">2 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-teal">5</div>
+      <div><div class="ex-name">Bicep Curl</div><div class="ex-tags"><span class="tag tag-m">หน้าแขน</span><span class="tag tag-t">ไม่แกว่งตัว</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">12 ครั้ง</div></div>
+    </div>
+    <div class="section-head">Core</div>
+    <div class="ex-row">
+      <div class="ex-num n-teal">6</div>
+      <div><div class="ex-name">Dead Bug</div><div class="ex-alt">ดีมากสำหรับแก้ออฟฟิศซินโดรม</div><div class="ex-tags"><span class="tag tag-m">Core</span><span class="tag tag-m">หลังล่าง</span><span class="tag tag-t">หลังแนบพื้น</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">8 ต่อข้าง</div></div>
+    </div>
+    <div class="rest-note">⏱ พัก Deadlift 2 นาที · Accessory 60 วิ · รวม ~60 นาที</div>
+  </div>
+
+  <!-- THU: Stretch -->
+  <div class="panel" id="panel-3">
+    <div class="focus-bar fb-gray"><span class="focus-icon">🧘</span><span><strong>ยืดเหยียด — แก้ออฟฟิศซินโดรม</strong> · ทำหลังเลิกงานได้เลย</span></div>
+    <div class="section-head">Upper body &amp; Neck</div>
+    <div class="ex-row">
+      <div class="ex-num n-gray">1</div>
+      <div><div class="ex-name">Neck Roll + Side Stretch</div><div class="ex-alt">หมุนคอช้าๆ 5 รอบ แล้วเอียงค้างไว้</div><div class="ex-tags"><span class="tag tag-m">คอ</span><span class="tag tag-m">บ่า</span></div></div>
+      <div><div class="ex-sets">2 เซต</div><div class="ex-reps">30 วิ ต่อข้าง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-gray">2</div>
+      <div><div class="ex-name">Chest Opener (Doorway Stretch)</div><div class="ex-alt">ยืนพิงกรอบประตู กางแขนออก</div><div class="ex-tags"><span class="tag tag-m">อก</span><span class="tag tag-m">ไหล่หน้า</span><span class="tag tag-t">แก้หลังค่อม</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">30 วิ</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-gray">3</div>
+      <div><div class="ex-name">Thoracic Rotation</div><div class="ex-alt">นอนตะแคง เอาเข่าชิดกัน หมุนลำตัวบน</div><div class="ex-tags"><span class="tag tag-m">หลังกลาง</span><span class="tag tag-t">แก้ปวดหลัง</span></div></div>
+      <div><div class="ex-sets">2 เซต</div><div class="ex-reps">10 ต่อข้าง</div></div>
+    </div>
+    <div class="section-head">Lower body &amp; Hip</div>
+    <div class="ex-row">
+      <div class="ex-num n-gray">4</div>
+      <div><div class="ex-name">Hip Flexor Stretch (Kneeling Lunge)</div><div class="ex-alt">คุกเข่าขาหน้า ดันสะโพกไปข้างหน้า</div><div class="ex-tags"><span class="tag tag-m">สะโพกหน้า</span><span class="tag tag-t">สำคัญมากสำหรับคนนั่งนาน</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">45 วิ ต่อข้าง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-gray">5</div>
+      <div><div class="ex-name">Pigeon Pose</div><div class="ex-alt">ยืดสะโพกด้านนอก ดีมากสำหรับคนนั่งทำงาน</div><div class="ex-tags"><span class="tag tag-m">สะโพก</span><span class="tag tag-m">ก้น</span></div></div>
+      <div><div class="ex-sets">2 เซต</div><div class="ex-reps">45 วิ ต่อข้าง</div></div>
+    </div>
+    <div class="section-head">Spine</div>
+    <div class="ex-row">
+      <div class="ex-num n-gray">6</div>
+      <div><div class="ex-name">Cat-Cow</div><div class="ex-alt">คลายกระดูกสันหลังทั้งแนว</div><div class="ex-tags"><span class="tag tag-m">กระดูกสันหลัง</span><span class="tag tag-m">หลังล่าง</span></div></div>
+      <div><div class="ex-sets">2 เซต</div><div class="ex-reps">10 รอบ</div></div>
+    </div>
+    <div class="rest-note">⏱ รวม ~25 นาที · ไม่ต้องบีบแรงเจ็บ ยืดแค่รู้สึกตึงพอ</div>
+  </div>
+
+  <!-- FRI: Party -->
+  <div class="panel" id="panel-4">
+    <div class="focus-bar fb-red"><span class="focus-icon">🎉</span><span><strong>วันปาร์ตี้ — ห้ามแตะยิมเด็ดขาด</strong></span></div>
+    <div class="rest-big">
+      <span class="rest-emoji">🍺</span>
+      ไม่มีโปรแกรมวันนี้<br>
+      <span style="font-size:12px; color:var(--color-text-tertiary)">ดื่มน้ำเยอะๆ · กินโปรตีนก่อนออก · นอนให้พอ<br>พรุ่งนี้ยังต้องเทรนอยู่นะ 💪</span>
+    </div>
+  </div>
+
+  <!-- SAT: Full Body C -->
+  <div class="panel" id="panel-5">
+    <div class="focus-bar fb-amber"><span class="focus-icon">💪</span><span><strong>Full Body C — Press focus</strong> · เน้นอกและไหล่ + ขา Split Squat</span></div>
+    <div class="section-head">Compound</div>
+    <div class="ex-row">
+      <div class="ex-num n-amber">1</div>
+      <div><div class="ex-name">Incline DB Press</div><div class="ex-alt">ทางเลือก → Barbell Bench Press</div><div class="ex-tags"><span class="tag tag-m">อกบน</span><span class="tag tag-m">ไหล่หน้า</span><span class="tag tag-m">หลังแขน</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">10–12 ครั้ง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-amber">2</div>
+      <div><div class="ex-name">Bulgarian Split Squat</div><div class="ex-alt">ขาหลังพาดบนม้านั่ง</div><div class="ex-tags"><span class="tag tag-m">Quad</span><span class="tag tag-m">Glute</span><span class="tag tag-t">ยากแต่คุ้มมาก</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">10 ต่อข้าง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-amber">3</div>
+      <div><div class="ex-name">Seated Cable Row</div><div class="ex-alt">ทางเลือก → Bent-over Barbell Row</div><div class="ex-tags"><span class="tag tag-m">หลังกลาง</span><span class="tag tag-m">หน้าแขน</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">10–12 ครั้ง</div></div>
+    </div>
+    <div class="section-head">Accessory</div>
+    <div class="ex-row">
+      <div class="ex-num n-amber">4</div>
+      <div><div class="ex-name">Hip Thrust</div><div class="ex-alt">ใช้บาร์เบลหรือดัมเบลวางบนสะโพก</div><div class="ex-tags"><span class="tag tag-m">Glute</span><span class="tag tag-m">Hamstring</span><span class="tag tag-t">บีบก้นสุดด้านบน</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">12–15 ครั้ง</div></div>
+    </div>
+    <div class="ex-row">
+      <div class="ex-num n-amber">5</div>
+      <div><div class="ex-name">Tricep Pushdown</div><div class="ex-alt">ใช้ Cable หรือ Resistance Band</div><div class="ex-tags"><span class="tag tag-m">หลังแขน</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">12–15 ครั้ง</div></div>
+    </div>
+    <div class="section-head">Core</div>
+    <div class="ex-row">
+      <div class="ex-num n-amber">6</div>
+      <div><div class="ex-name">Hollow Body Hold</div><div class="ex-alt">หลังล่างแนบพื้นตลอด</div><div class="ex-tags"><span class="tag tag-m">Core</span><span class="tag tag-t">หลังล่างแนบพื้น</span></div></div>
+      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">20–30 วิ</div></div>
+    </div>
+    <div class="rest-note">⏱ พัก Compound 90–120 วิ · Accessory 60 วิ · รวม ~60 นาที</div>
+  </div>
+
+  <!-- SUN: Rest -->
+  <div class="panel" id="panel-6">
+    <div class="focus-bar fb-gray"><span class="focus-icon">😴</span><span><strong>พักเต็มที่ — ร่างกายสร้างกล้ามเนื้อตอนนี้</strong></span></div>
+    <div class="rest-big">
+      <span class="rest-emoji">💤</span>
+      ไม่มีโปรแกรมวันนี้<br>
+      <span style="font-size:12px; color:var(--color-text-tertiary)">นอน 7–8 ชม. · กินโปรตีนให้พอ · ไม่ต้องรู้สึกผิด<br>การพักคือส่วนหนึ่งของการเทรน</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  var styles = ['act-purple','act-pink','act-teal','act-gray','act-red','act-amber','act-rest'];
+  function show(i) {
+    for(var d=0;d<7;d++){
+      document.getElementById('panel-'+d).classList.toggle('show', d===i);
+      var t = document.getElementById('tab-'+d);
+      t.className = 'tab' + (d===i ? ' '+styles[d] : '');
+    }
+  }
+</script>
