@@ -235,44 +235,90 @@
     </div>
   </div>
 
-  <!-- SAT: Light Legs + Core -->
+  <!-- SAT -->
 
   <div class="panel" id="panel-5">
-    <div class="focus-bar fb-amber"><span class="focus-icon">🦵</span><span><strong>ขาเบา + Core</strong> · ไม่หนัก แค่ maintain + เผาไขมัน + เห็น abs</span></div>
-    <div class="def-tip">💡 ขาวันนี้เน้น pump ไม่ใช่ strength · น้ำหนักเบา rep เยอะ · Core วันนี้หนักกว่าทุกวัน</div>
-    <div class="section-head">ขา (เบา)</div>
-    <div class="ex-row">
-      <div class="ex-num n-amber">1</div>
-      <div><div class="ex-name">Leg Press (น้ำหนักเบา)</div><div class="ex-alt">ใช้น้ำหนักแค่ 50–60% ของที่ทำได้สูงสุด</div><div class="ex-tags"><span class="tag tag-m">Quad</span><span class="tag tag-m">Glute</span><span class="tag tag-m">Hamstring</span></div></div>
-      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">20 ครั้ง</div></div>
+    <!-- Toggle -->
+    <div style="display:flex; gap:6px; margin-bottom:14px;">
+      <div id="sat-btn-legs" onclick="satShow('legs')" style="flex:1; padding:10px 8px; border-radius:8px; border:0.5px solid #FAC775; background:#FAEEDA; color:#633806; font-size:12px; font-weight:500; cursor:pointer; text-align:center;">🦵 ขาเบา + Core</div>
+      <div id="sat-btn-chest" onclick="satShow('chest')" style="flex:1; padding:10px 8px; border-radius:8px; border:0.5px solid #ddd; background:#f5f5f5; color:#666; font-size:12px; font-weight:500; cursor:pointer; text-align:center;">🫁 อกเสริม (Grab)</div>
     </div>
-    <div class="ex-row">
-      <div class="ex-num n-amber">2</div>
-      <div><div class="ex-name">Leg Curl Machine</div><div class="ex-alt">เน้นหลังขา ลงช้า 2–3 วิ</div><div class="ex-tags"><span class="tag tag-m">Hamstring</span><span class="tag tag-t">ลงช้า 2–3 วิ</span></div></div>
-      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
-    </div>
-    <div class="ex-row">
-      <div class="ex-num n-amber">3</div>
-      <div><div class="ex-name">Calf Raise Machine</div><div class="ex-alt">Seated หรือ Standing machine — ยกขึ้นค้าง 1 วิ ลงช้า</div><div class="ex-tags"><span class="tag tag-m">น่อง</span><span class="tag tag-def">กล้ามขาชัด</span></div></div>
-      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">20 ครั้ง</div></div>
-    </div>
-    <div class="section-head">Core (หนักขึ้น)</div>
-    <div class="ex-row">
-      <div class="ex-num n-amber">4</div>
-      <div><div class="ex-name">Hanging Knee Raise</div><div class="ex-alt">ห้อยบาร์ ยกเข่าขึ้น — เน้นท้องล่าง</div><div class="ex-tags"><span class="tag tag-m">ท้องล่าง</span><span class="tag tag-def">เห็น lower abs</span></div></div>
-      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
-    </div>
-    <div class="ex-row">
-      <div class="ex-num n-amber">5</div>
-      <div><div class="ex-name">Cable Crunch</div><div class="ex-alt">คุกเข่า ดึง Cable ลง ม้วนท้อง</div><div class="ex-tags"><span class="tag tag-m">ท้องบน</span><span class="tag tag-m">ท้องกลาง</span><span class="tag tag-def">เห็น abs ชัด</span></div></div>
-      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
-    </div>
-    <div class="ex-row">
-      <div class="ex-num n-amber">6</div>
-      <div><div class="ex-name">Hollow Body Hold</div><div class="ex-alt">หลังล่างแนบพื้นตลอด</div><div class="ex-tags"><span class="tag tag-m">Core ทั้งหมด</span><span class="tag tag-t">หลังล่างแนบพื้น</span></div></div>
-      <div><div class="ex-sets">3 เซต</div><div class="ex-reps">25–30 วิ</div></div>
-    </div>
-    <div class="rest-note">⏱ พักระหว่างเซต 60 วิ · รวม ~50 นาที</div>
+
+```
+<!-- LEGS -->
+<div id="sat-legs">
+  <div class="focus-bar fb-amber"><span class="focus-icon">🦵</span><span><strong>ขาเบา + Core</strong> · ไม่หนัก แค่ maintain + เผาไขมัน + เห็น abs</span></div>
+  <div class="def-tip">💡 ขาวันนี้เน้น pump ไม่ใช่ strength · น้ำหนักเบา rep เยอะ · Core วันนี้หนักกว่าทุกวัน</div>
+  <div class="section-head">ขา (เบา)</div>
+  <div class="ex-row">
+    <div class="ex-num n-amber">1</div>
+    <div><div class="ex-name">Leg Press (น้ำหนักเบา)</div><div class="ex-alt">ใช้น้ำหนักแค่ 50–60% ของที่ทำได้สูงสุด</div><div class="ex-tags"><span class="tag tag-m">Quad</span><span class="tag tag-m">Glute</span><span class="tag tag-m">Hamstring</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">20 ครั้ง</div></div>
+  </div>
+  <div class="ex-row">
+    <div class="ex-num n-amber">2</div>
+    <div><div class="ex-name">Leg Curl Machine</div><div class="ex-alt">เน้นหลังขา ลงช้า 2–3 วิ</div><div class="ex-tags"><span class="tag tag-m">Hamstring</span><span class="tag tag-t">ลงช้า 2–3 วิ</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+  </div>
+  <div class="ex-row">
+    <div class="ex-num n-amber">3</div>
+    <div><div class="ex-name">Calf Raise Machine</div><div class="ex-alt">Seated หรือ Standing machine — ยกขึ้นค้าง 1 วิ ลงช้า</div><div class="ex-tags"><span class="tag tag-m">น่อง</span><span class="tag tag-def">กล้ามขาชัด</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">20 ครั้ง</div></div>
+  </div>
+  <div class="section-head">Core (หนักขึ้น)</div>
+  <div class="ex-row">
+    <div class="ex-num n-amber">4</div>
+    <div><div class="ex-name">Hanging Knee Raise</div><div class="ex-alt">ห้อยบาร์ ยกเข่าขึ้น — เน้นท้องล่าง</div><div class="ex-tags"><span class="tag tag-m">ท้องล่าง</span><span class="tag tag-def">เห็น lower abs</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+  </div>
+  <div class="ex-row">
+    <div class="ex-num n-amber">5</div>
+    <div><div class="ex-name">Cable Crunch</div><div class="ex-alt">คุกเข่า ดึง Cable ลง ม้วนท้อง</div><div class="ex-tags"><span class="tag tag-m">ท้องบน</span><span class="tag tag-m">ท้องกลาง</span><span class="tag tag-def">เห็น abs ชัด</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+  </div>
+  <div class="ex-row">
+    <div class="ex-num n-amber">6</div>
+    <div><div class="ex-name">Cable Woodchop</div><div class="ex-alt">ตั้ง Cable สูง ดึงหมุนตัวลงต่ำข้างตรงข้าม — สลับข้าง</div><div class="ex-tags"><span class="tag tag-m">Core รอบ</span><span class="tag tag-m">Oblique</span><span class="tag tag-t">หมุนจากสะโพก</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">12 ต่อข้าง</div></div>
+  </div>
+  <div class="rest-note">⏱ พักระหว่างเซต 60 วิ · รวม ~50 นาที</div>
+</div>
+
+<!-- CHEST GRAB -->
+<div id="sat-chest" style="display:none;">
+  <div class="focus-bar fb-blue"><span class="focus-icon">🫁</span><span><strong>อกเสริม — Grab day</strong> · ใช้เมื่อวันจันทร์เล่นไม่ไหว เน้น pump เบาๆ</span></div>
+  <div class="def-tip">💡 วันนี้ไม่ต้องหนัก ลด 20–30% จากวันจันทร์ เน้น feel และ connection ของกล้ามอก</div>
+  <div class="section-head">หลัก</div>
+  <div class="ex-row">
+    <div class="ex-num n-blue">1</div>
+    <div><div class="ex-name">Chest Press Machine</div><div class="ex-alt">ลดน้ำหนักลง 20–30% จากวันจันทร์ — เน้น squeeze</div><div class="ex-tags"><span class="tag tag-m">อกกลาง</span><span class="tag tag-m">ไหล่หน้า</span><span class="tag tag-t">บีบค้าง 2 วิ</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+  </div>
+  <div class="ex-row">
+    <div class="ex-num n-blue">2</div>
+    <div><div class="ex-name">Pec Deck Machine</div><div class="ex-alt">บีบอกค้างตอนชิด เน้นอกใน</div><div class="ex-tags"><span class="tag tag-m">อกใน</span><span class="tag tag-m">อกกลาง</span><span class="tag tag-def">กล้ามชัด</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+  </div>
+  <div class="ex-row">
+    <div class="ex-num n-blue">3</div>
+    <div><div class="ex-name">Cable Crossover High to Low</div><div class="ex-alt">ดึงจากบนลงล่าง — เน้นอกล่างและ separation</div><div class="ex-tags"><span class="tag tag-m">อกล่าง</span><span class="tag tag-m">อกใน</span><span class="tag tag-def">separation ชัด</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+  </div>
+  <div class="section-head">เสริม</div>
+  <div class="ex-row">
+    <div class="ex-num n-blue">4</div>
+    <div><div class="ex-name">Cable Low to High Fly</div><div class="ex-alt">ดึง Cable จากล่างขึ้น — เน้นอกล่างและข้าง</div><div class="ex-tags"><span class="tag tag-m">อกล่าง</span><span class="tag tag-m">อกข้าง</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+  </div>
+  <div class="ex-row">
+    <div class="ex-num n-blue">5</div>
+    <div><div class="ex-name">Incline DB Press</div><div class="ex-alt">เบากว่าวันจันทร์ เน้นอกบน</div><div class="ex-tags"><span class="tag tag-m">อกบน</span><span class="tag tag-def">definition</span></div></div>
+    <div><div class="ex-sets">3 เซต</div><div class="ex-reps">15 ครั้ง</div></div>
+  </div>
+  <div class="rest-note">⏱ พักระหว่างเซต 60 วิ · รวม ~45 นาที · เบากว่าวันจันทร์เสมอ</div>
+</div>
+```
+
   </div>
 
   <!-- SUN: Rest -->
@@ -289,6 +335,21 @@
 
 <script>
   var styles = ['act-blue','act-teal','act-pink','act-purple','act-red','act-amber','act-gray'];
+  function satShow(mode) {
+    var legs = document.getElementById('sat-legs');
+    var chest = document.getElementById('sat-chest');
+    var btnLegs = document.getElementById('sat-btn-legs');
+    var btnChest = document.getElementById('sat-btn-chest');
+    if (mode === 'legs') {
+      legs.style.display = 'block'; chest.style.display = 'none';
+      btnLegs.style.background='#FAEEDA'; btnLegs.style.color='#633806'; btnLegs.style.borderColor='#FAC775';
+      btnChest.style.background='#f5f5f5'; btnChest.style.color='#666'; btnChest.style.borderColor='#ddd';
+    } else {
+      legs.style.display = 'none'; chest.style.display = 'block';
+      btnChest.style.background='#E6F1FB'; btnChest.style.color='#0C447C'; btnChest.style.borderColor='#85B7EB';
+      btnLegs.style.background='#f5f5f5'; btnLegs.style.color='#666'; btnLegs.style.borderColor='#ddd';
+    }
+  }
   function show(i) {
     for (var d = 0; d < 7; d++) {
       document.getElementById('panel-' + d).classList.toggle('show', d === i);
