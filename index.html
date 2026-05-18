@@ -6,6 +6,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weekly Workout Program</title>
 <style>
+ /* สไตล์สำหรับช่องกรอกน้ำหนัก */
+  .weight-input {
+    display: block;
+    width: 45px;
+    margin: 6px 0 0 auto; /* จัดให้อยู่ชิดขวา */
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 11px;
+    text-align: center;
+    background-color: #fff;
+    transition: all 0.2s;
+  }
+  .weight-input:focus {
+    border-color: #0C447C;
+    outline: none;
+    box-shadow: 0 0 0 2px #E6F1FB;
+  }
+  /* ซ่อนลูกศรขึ้นลงในช่อง input type="number" */
+  .weight-input::-webkit-outer-spin-button,
+  .weight-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: sans-serif; background: #fff; color: #111; padding: 16px; }
   .prog { padding: 1rem 0 1.5rem; }
@@ -357,6 +381,47 @@
       t.className = 'tab' + (d === i ? ' ' + styles[d] : '');
     }
   }
+ // โค้ดสร้างช่องกรอกน้ำหนักและระบบบันทึกข้อมูล (Local Storage)
+  document.addEventListener('DOMContentLoaded', function() {
+    // หาแถวท่าออกกำลังกายทั้งหมด
+    var exerciseRows = document.querySelectorAll('.ex-row');
+    
+    exerciseRows.forEach(function(row, index) {
+      // ตรวจสอบว่านี่คือการวิ่งหรือคาร์ดิโอหรือไม่ (ถ้าใช่จะไม่ใส่ช่องน้ำหนัก)
+      var isCardio = row.querySelector('.ex-name').innerText.includes('วิ่ง') || 
+                     row.querySelector('.ex-name').innerText.includes('ปั่น') ||
+                     row.querySelector('.ex-name').innerText.includes('เดิน') ||
+                     row.querySelector('.ex-name').innerText.includes('ว่ายน้ำ');
+                     
+      if (!isCardio) {
+        var rightCol = row.lastElementChild; // คอลัมน์ขวาสุด (ที่มีเซตกับครั้ง)
+        
+        // สร้างช่อง input
+        var input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'weight-input';
+        input.placeholder = 'kg';
+        
+        // สร้าง ID เฉพาะให้แต่ละช่อง เพื่อให้จำได้ว่าช่องไหนคือน้ำหนักของท่าไหน
+        var uniqueId = 'weight-record-' + index;
+        input.id = uniqueId;
+        
+        // ดึงข้อมูลเก่าจาก Local Storage (ถ้ามี)
+        var savedWeight = localStorage.getItem(uniqueId);
+        if (savedWeight !== null) {
+          input.value = savedWeight;
+        }
+        
+        // บันทึกข้อมูลอัตโนมัติเมื่อมีการพิมพ์
+        input.addEventListener('input', function() {
+          localStorage.setItem(uniqueId, this.value);
+        });
+        
+        // นำช่อง input ไปใส่ใน HTML
+        rightCol.appendChild(input);
+      }
+    });
+  });
 </script>
 
 </body>
